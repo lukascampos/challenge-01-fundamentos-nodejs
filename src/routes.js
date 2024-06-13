@@ -38,9 +38,11 @@ export const routes = [
 
          if(rowIndex > -1){
             tasks.splice(rowIndex, 1);
+            
+            return res.writeHead(204).end();
          }
 
-         return res.writeHead(204).end();
+         return res.writeHead(404).end(JSON.stringify("Task not found"));
       }
    },
    {
@@ -60,9 +62,11 @@ export const routes = [
                created_at: row.created_at, 
                updated_at: row.updated_at = new Date()
             }
+
+            return res.writeHead(201).end(JSON.stringify(tasks[rowIndex]));
          }
 
-         return res.writeHead(201).end(JSON.stringify(tasks[rowIndex]));
+         return res.writeHead(404).end(JSON.stringify("Task not found"));
       }
    },
 ]
