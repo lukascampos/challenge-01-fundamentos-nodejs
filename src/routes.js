@@ -26,6 +26,10 @@ export const routes = [
             updated_at: new Date()
          })
 
+         if(description === undefined || title === undefined){
+            return res.writeHead(400).end(JSON.stringify("description and title required"));
+         }
+
          return res.writeHead(201).end(JSON.stringify(tasks[tasks.length-1]));
       }
    },
@@ -55,9 +59,11 @@ export const routes = [
 
          if(rowIndex > -1){
             const row = tasks[rowIndex]
+            
             tasks[rowIndex] = { 
                id, 
-               ...req.body, 
+               title: req.body.title === undefined ? row.title : req.body.title, 
+               description: req.body.description === undefined ? row.description : req.body.description,
                completed_at: row.completed_at, 
                created_at: row.created_at, 
                updated_at: row.updated_at = new Date()
