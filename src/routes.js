@@ -75,4 +75,30 @@ export const routes = [
          return res.writeHead(404).end(JSON.stringify("Task not found"));
       }
    },
+   {
+      method: 'PATCH',
+      path: buildRoutePath('/tasks/:id/complete'),
+      handler: (req, res) => {
+         const id = req.params.id;
+
+         const rowIndex = tasks.findIndex(row => row.id === req.params.id);
+
+         if(rowIndex > -1){
+            const row = tasks[rowIndex]
+            
+            tasks[rowIndex] = { 
+               id, 
+               title: row.title, 
+               description: row.description,
+               completed_at: row.completed_at = new Date(), 
+               created_at: row.created_at, 
+               updated_at: row.updated_at = new Date()
+            }
+
+            return res.writeHead(201).end(JSON.stringify(tasks[rowIndex]));
+         }
+
+         return res.writeHead(404).end(JSON.stringify("Task not found"));
+      }
+   },
 ]
