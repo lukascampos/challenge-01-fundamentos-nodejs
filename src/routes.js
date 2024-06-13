@@ -26,7 +26,7 @@ export const routes = [
             updated_at: new Date()
          })
 
-         return res.writeHead(201).end();
+         return res.writeHead(201).end(JSON.stringify(tasks[tasks.length-1]));
       }
    },
    {
@@ -41,6 +41,28 @@ export const routes = [
          }
 
          return res.writeHead(204).end();
+      }
+   },
+   {
+      method: 'PUT',
+      path: buildRoutePath('/tasks/:id'),
+      handler: (req, res) => {
+         const id = req.params.id;
+
+         const rowIndex = tasks.findIndex(row => row.id === req.params.id);
+
+         if(rowIndex > -1){
+            const row = tasks[rowIndex]
+            tasks[rowIndex] = { 
+               id, 
+               ...req.body, 
+               completed_at: row.completed_at, 
+               created_at: row.created_at, 
+               updated_at: row.updated_at = new Date()
+            }
+         }
+
+         return res.writeHead(201).end(JSON.stringify(tasks[rowIndex]));
       }
    },
 ]
